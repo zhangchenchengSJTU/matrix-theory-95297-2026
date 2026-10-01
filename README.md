@@ -43,4 +43,4 @@ https://zhangchenchengsjtu.github.io/matrix-theory-95297-2026/
 
 打印时选择 A4, 缩放100%, 禁用浏览器自带页眉页脚. 网页使用双面页码, 公式可能增大局部行高. 小屏幕阅读采用自适应宽度, 精确物理尺寸以 A4 打印为准.
 
-署名和日期在 `assignment.js` 的 `issuer`, `publication-date`, `print-date` 字段配置, 也可用同名 Markdown 元数据覆盖. 日期为固定发布记录, 不随浏览时间变化. 正文末尾显示发布单位和发布日期, 末尾版记显示单位和印发日期. 版记随正文分页, 不在每页重复.
+署名和日期在 `assignment.js` 的 `issuer`, `printer`, `publication-date`, `print-date` 字段配置, 也可用同名 Markdown 元数据覆盖. 日期为固定发布记录, 不随浏览时间变化. 正文末尾显示发布单位和发布日期, 末尾版记显示印发人和印发日期. 版记随正文分页, 不在每页重复.

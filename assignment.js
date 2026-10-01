@@ -13,7 +13,8 @@
     const fields = file === 'hw01.md' ? {
       redhead: '矩阵理论课程作业',
       'document-number': '研-MATH6005-M05-矩阵理论 〔2026〕 第 1 次作业',
-      issuer: '矩阵理论课程组',
+      issuer: '研-MATH6005-M05-矩阵理论',
+      printer: '助教: 张陈成',
       'publication-date': '2026年10月1日',
       'print-date': '2026年10月1日'
     } : {};
@@ -61,7 +62,7 @@
         const imprint = document.createElement('footer');
         imprint.className = 'document-imprint';
         const issuer = document.createElement('span');
-        issuer.textContent = fields.issuer;
+        issuer.textContent = fields.printer || fields.issuer;
         const date = document.createElement('span');
         date.textContent = `${fields['print-date']}印发`;
         imprint.append(issuer, date);
