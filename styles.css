@@ -1,27 +1,26 @@
 * { box-sizing: border-box; }
-body { margin: 0; background: #fff; color: #222; font-family: "SimSun", "宋体", "Songti SC", "Noto Serif CJK SC", serif; line-height: 1.6; }
-main { max-width: 760px; margin: 64px auto; padding: 0 24px; }
-h1 { margin: 0; font-size: 28px; font-weight: 600; }
-.subtitle { margin: 4px 0 40px; color: #666; font-size: 14px; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-caption { text-align: left; font-size: 18px; font-weight: 600; margin-bottom: 12px; }
-th, td { padding: 14px 8px; border-bottom: 1px solid #e5e5e5; text-align: left; }
-th { color: #666; font-weight: 500; }
-th:first-child { width: 45%; }
-a { color: #1659a0; text-underline-offset: 3px; }
-a:focus-visible { outline: 2px solid #1659a0; outline-offset: 4px; }
-.empty { color: #888; text-align: center; padding: 32px 8px; }
-@media (max-width: 480px) { main { margin: 36px auto; padding: 0 16px; } th, td { padding: 12px 4px; } }
-.paper { max-width: 800px; }
-.back { font-size: 13px; }
-article { margin-top: 40px; font-size: 17px; line-height: 1.9; }
-article h1 { text-align: center; font-size: 28px; margin-bottom: 32px; }
-article h2 { font-size: 21px; margin-top: 36px; }
-article h3 { font-size: 18px; }
-article p { margin: 16px 0; }
-article mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
+body { margin: 0; background: #fff; color: #000; font-family: "FangSong", "仿宋", "仿宋_GB2312", "SimSun", "宋体", "Songti SC", "Noto Serif CJK SC", serif; font-size: 16pt; line-height: 28pt; }
+main { max-width: calc(156mm + 48px); margin: 56px auto; padding: 0 24px; }
+h1 { margin: 0 0 24pt; text-align: center; font-family: "FZXiaoBiaoSong-B05S", "方正小标宋简体", "STSong", "SimSun", "宋体", "Noto Serif CJK SC", serif; font-size: 22pt; line-height: 32pt; font-weight: normal; }
+.subtitle { margin: 0 0 28pt; text-align: center; font-size: 16pt; }
+table { width: 100%; border-collapse: collapse; font-size: 16pt; }
+caption { text-align: left; font-size: 16pt; margin-bottom: 12px; }
+th, td { padding: 14px 8px; border-bottom: 1px solid #ddd; text-align: left; font-weight: normal; }
+th:first-child { width: 35%; }
+a { color: #000; text-underline-offset: 4px; }
+a:focus-visible { outline: 2px solid #333; outline-offset: 4px; }
+.empty { text-align: center; padding: 32px 8px; }
+.back { font-size: 12pt; }
+article { margin-top: 28pt; }
+article h2 { font-size: 16pt; margin: 28pt 0 0; }
+article h3 { font-size: 16pt; margin: 28pt 0 0; }
+article p { margin: 0 0 14pt; text-indent: 2em; text-align: justify; overflow-wrap: anywhere; }
+article ol, article ul { margin: 0 0 14pt; padding-left: 2em; }
+article li { padding-left: 0.25em; }
+article mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 8px 0; text-indent: 0; }
 article pre { overflow-x: auto; padding: 12px; background: #f6f6f6; }
-article blockquote { margin-left: 0; padding-left: 18px; border-left: 2px solid #ddd; color: #555; }
-@media print { .back { display: none; } .paper { margin: 0; max-width: none; } }
-
+article blockquote { margin-left: 0; padding-left: 18px; border-left: 2px solid #ddd; }
 button, input, select, textarea, code, pre, kbd, samp { font-family: inherit; }
+@media (max-width: 640px) { main { margin: 32px auto; padding: 0 16px; } table { font-size: 14pt; } th, td { padding: 12px 4px; } }
+@page { size: A4; margin: 37mm 26mm 35mm 28mm; }
+@media print { main { margin: 0; padding: 0; max-width: none; } .back { display: none; } article { margin-top: 0; } h1, h2, h3 { break-after: avoid; } p, li { orphans: 2; widows: 2; } a { text-decoration: none; } }

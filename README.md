@@ -29,3 +29,7 @@ python3 -m http.server 8952 --bind 127.0.0.1
 
 GitHub Pages:`main` 分支根目录.
 https://zhangchenchengsjtu.github.io/matrix-theory-95297-2026/
+
+## 排版
+
+参考 GB/T 9704-2012 的公文正文风格: 二号小标宋标题, 三号仿宋正文, 首行缩进两字. 打印采用 A4, 上37mm/右26mm/下35mm/左28mm 页边距. 保留半角标点和 LaTeX 数学字形. 本站为课程作业, 仅借用正文排版, 并非完整公文格式. 浏览器需安装仿宋和小标宋以显示指定字体, 缺失时回退到宋体类字体.
