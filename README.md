@@ -1,7 +1,7 @@
 # 矩阵理论作业与答案
 
-上海交通大学 · 2026 年秋季学期  
-研-MATH6005-M05-矩阵理论  
+上海交通大学 · 2026 年秋季学期
+研-MATH6005-M05-矩阵理论
 教师：陈国度 · 助教：张陈成
 
 纯静态 HTML/CSS/JavaScript，无 Ruby、无构建步骤。
@@ -22,7 +22,7 @@ Markdown 使用 Marked 15.0.12 渲染，数学公式使用 MathJax 3.2.2 SVG 渲
 python3 -m http.server 8952 --bind 127.0.0.1
 ```
 
-主页：http://localhost:8952/  
+主页：http://localhost:8952/
 排版预览：http://localhost:8952/assignment.html?file=preview.md
 
 ## 部署
