@@ -35,8 +35,8 @@ button, input, select, textarea, code, pre, kbd, samp { font-family: inherit; }
    Course wording and half-width punctuation remain intentional customizations. */
 .official-document { --rule-width: 149.225mm; position: relative; width: 210mm; max-width: none; min-height: 297mm; margin: 0 auto; padding: 37mm 30.965mm 35mm 29.81mm; }
 .official-document > .document-toolbar { position: absolute; top: 12px; left: 29.81mm; right: 30.965mm; }
-.document-masthead { position: relative; height: 85.064mm; border-bottom: 0.6mm solid #ff0000; break-inside: avoid; }
-.document-name { position: absolute; top: 38.175mm; left: 0; width: 100%; color: #ff0000; font-family: "FZXiaoBiaoSong-B05S", "方正小标宋简体", "STSong", "华文宋体", "SimSun", "宋体", "Noto Serif CJK SC", serif; font-size: 36pt; font-weight: bold; line-height: 1; text-align: center; white-space: nowrap; transform: scaleY(1.4); transform-origin: center top; }
+.document-masthead { position: relative; height: 85.064mm; border-bottom: 0.6mm solid #036eb8; break-inside: avoid; }
+.document-name { position: absolute; top: 38.175mm; left: 0; width: 100%; color: #036eb8; font-family: "FZXiaoBiaoSong-B05S", "方正小标宋简体", "STSong", "华文宋体", "SimSun", "宋体", "Noto Serif CJK SC", serif; font-size: 36pt; font-weight: bold; line-height: 1; text-align: center; white-space: nowrap; transform: scaleY(1.4); transform-origin: center top; }
 .document-number { position: absolute; top: 72.558mm; left: 0; width: 100%; font-size: 16pt; line-height: 30pt; text-align: center; white-space: nowrap; }
 .official-document article { margin-top: 80pt; }
 .official-document article > h1 { line-height: 30pt; margin-bottom: 30pt; }
