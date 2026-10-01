@@ -12,7 +12,7 @@
     const metadata = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
     const fields = file === 'hw01.md' ? {
       redhead: '矩阵理论课程作业',
-      'document-number': '研-MATH6005-M05-矩阵理论 [2026] 第 1 次作业'
+      'document-number': '研-MATH6005-M05-矩阵理论 〔2026〕 第 1 次作业'
     } : {};
     if (metadata) {
       for (const line of metadata[1].split(/\r?\n/)) {
