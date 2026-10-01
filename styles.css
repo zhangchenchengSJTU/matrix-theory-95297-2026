@@ -60,3 +60,8 @@ button, input, select, textarea, code, pre, kbd, samp { font-family: inherit; }
   article mjx-container:not([display="true"]) { display: inline-block; max-width: calc(100% - 2em); overflow-x: auto; overflow-y: hidden; vertical-align: middle; }
   article mjx-container:not([display="true"]) > svg { max-width: 100%; height: auto; }
 }
+
+.document-signature { margin-top: 30pt; padding-right: 2em; text-align: right; break-inside: avoid; font-size: 16pt; line-height: 30pt; }
+.document-imprint { display: flex; justify-content: space-between; gap: 1em; margin-top: 30pt; padding: 0 1em; border-top: 0.35mm solid #000; border-bottom: 0.35mm solid #000; font-size: 14pt; line-height: 28pt; break-inside: avoid; }
+.document-imprint span { white-space: nowrap; }
+@media (max-width: 480px) { .document-imprint { flex-wrap: wrap; } }

@@ -12,7 +12,10 @@
     const metadata = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
     const fields = file === 'hw01.md' ? {
       redhead: '矩阵理论课程作业',
-      'document-number': '研-MATH6005-M05-矩阵理论 〔2026〕 第 1 次作业'
+      'document-number': '研-MATH6005-M05-矩阵理论 〔2026〕 第 1 次作业',
+      issuer: '矩阵理论课程组',
+      'publication-date': '2026年10月1日',
+      'print-date': '2026年10月1日'
     } : {};
     if (metadata) {
       for (const line of metadata[1].split(/\r?\n/)) {
@@ -44,6 +47,27 @@
     let html = marked.parse(protectedMarkdown);
     html = html.replace(/MATHPLACEHOLDER(\d+)END/g, (_, index) => formulas[index].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
     content.innerHTML = html;
+    if (fields.issuer && fields['publication-date']) {
+      const signature = document.createElement('section');
+      signature.className = 'document-signature';
+      signature.setAttribute('aria-label', '发布单位和发布日期');
+      for (const text of [fields.issuer, fields['publication-date']]) {
+        const line = document.createElement('div');
+        line.textContent = text;
+        signature.append(line);
+      }
+      content.append(signature);
+      if (fields['print-date']) {
+        const imprint = document.createElement('footer');
+        imprint.className = 'document-imprint';
+        const issuer = document.createElement('span');
+        issuer.textContent = fields.issuer;
+        const date = document.createElement('span');
+        date.textContent = `${fields['print-date']}印发`;
+        imprint.append(issuer, date);
+        content.after(imprint);
+      }
+    }
     document.title = `${content.querySelector('h1')?.textContent || '作业'} · 矩阵理论`;
     await MathJax.startup.promise;
     await MathJax.typesetPromise([content]);
