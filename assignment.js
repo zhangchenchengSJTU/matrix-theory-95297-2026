@@ -64,7 +64,7 @@
         const issuer = document.createElement('span');
         issuer.textContent = fields.printer || fields.issuer;
         const date = document.createElement('span');
-        date.textContent = `${fields['print-date']}印发`;
+        date.textContent = `${fields['print-date']}发布`;
         imprint.append(issuer, date);
         content.after(imprint);
       }
