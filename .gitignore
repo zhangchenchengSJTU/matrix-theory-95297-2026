@@ -2,3 +2,6 @@ __pycache__/
 *.log
 
 .preview/
+
+pdf/
+_site/

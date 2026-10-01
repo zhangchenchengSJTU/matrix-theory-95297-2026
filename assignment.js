@@ -2,14 +2,13 @@
   const content = document.querySelector('#content');
   const sourceToggle = document.querySelector('#source-toggle');
   const sourcePanel = document.querySelector('#source-panel');
-  const printButton = document.querySelector('#print-button');
+  const pdfDownload = document.querySelector('#pdf-download');
   sourceToggle.addEventListener('click', () => {
     const expanded = sourceToggle.getAttribute('aria-expanded') !== 'true';
     sourceToggle.setAttribute('aria-expanded', String(expanded));
     sourceToggle.textContent = expanded ? '隐藏 Markdown 源代码' : '显示 Markdown 源代码';
     sourcePanel.hidden = !expanded;
   });
-  printButton.addEventListener('click', () => window.print());
   const file = new URLSearchParams(location.search).get('file');
   if (!file || !/^[a-zA-Z0-9_-]+\.md$/.test(file)) {
     content.textContent = '未找到作业.';
@@ -22,14 +21,10 @@
     document.querySelector('#markdown-source').textContent = markdown;
     sourceToggle.disabled = false;
     const metadata = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
-    const fields = file === 'hw01.md' ? {
-      redhead: '矩阵理论课程作业',
-      'document-number': '研-MATH6005-M05-矩阵理论 〔2026〕 第 1 次作业',
-      issuer: '研-MATH6005-M05-矩阵理论',
-      printer: '助教: 张陈成',
-      'publication-date': '2026年10月1日',
-      'print-date': '2026年10月1日'
-    } : {};
+    const configResponse = await fetch('assignments/documents.json');
+    if (!configResponse.ok) throw new Error('configuration');
+    const documents = await configResponse.json();
+    const fields = {...(documents[file] || {})};
     if (metadata) {
       for (const line of metadata[1].split(/\r?\n/)) {
         const separator = line.indexOf(':');
@@ -84,7 +79,11 @@
     document.title = `${content.querySelector('h1')?.textContent || '作业'} · 矩阵理论`;
     await MathJax.startup.promise;
     await MathJax.typesetPromise([content]);
-    printButton.disabled = false;
+    if (documents[file]) {
+      pdfDownload.href = `pdf/${file.replace(/\.md$/, '.pdf')}`;
+      pdfDownload.download = `${content.querySelector('h1')?.textContent.trim() || file.replace(/\.md$/, '')}.pdf`;
+      pdfDownload.hidden = false;
+    }
   } catch {
     content.textContent = '加载失败,请刷新页面或返回作业列表.';
   }

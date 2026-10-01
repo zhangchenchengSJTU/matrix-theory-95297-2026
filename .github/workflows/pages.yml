@@ -1,0 +1,40 @@
+name: Build homework PDFs and deploy Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - name: Install Markdown and LaTeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends pandoc latexmk texlive-xetex texlive-lang-chinese texlive-latex-extra texlive-fonts-recommended
+      - name: Compile Markdown directly to PDF
+        run: python3 scripts/build_pdf.py
+      - name: Prepare static site
+        run: |
+          mkdir _site
+          cp *.html *.css *.js .nojekyll _site/
+          cp -r assignments vendor files _site/
+          mkdir _site/pdf
+          cp pdf/*.pdf _site/pdf/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
