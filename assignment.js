@@ -8,7 +8,32 @@
   try {
     const response = await fetch(`assignments/${file}`);
     if (!response.ok) throw new Error('load');
-    const markdown = await response.text();
+    let markdown = await response.text();
+    const metadata = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
+    const fields = file === 'hw01.md' ? {
+      redhead: '矩阵理论课程作业',
+      'document-number': '研-MATH6005-M05-矩阵理论 [2026] 第 1 次作业'
+    } : {};
+    if (metadata) {
+      for (const line of metadata[1].split(/\r?\n/)) {
+        const separator = line.indexOf(':');
+        if (separator > 0) fields[line.slice(0, separator).trim()] = line.slice(separator + 1).trim();
+      }
+      markdown = markdown.slice(metadata[0].length);
+    }
+    if (fields.redhead && fields['document-number']) {
+      content.closest('main').classList.add('official-document');
+      const masthead = document.createElement('header');
+      masthead.className = 'document-masthead';
+      const name = document.createElement('div');
+      name.className = 'document-name';
+      name.textContent = fields.redhead;
+      const number = document.createElement('div');
+      number.className = 'document-number';
+      number.textContent = fields['document-number'];
+      masthead.append(name, number);
+      content.before(masthead);
+    }
     // Protect TeX from Markdown escaping, emphasis and table parsing.
     const formulas = [];
     const protectedMarkdown = markdown.replace(/\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|(?<!\\)\$(?!\$)(?:\\.|[^$\n])+?\$/g, formula => {
