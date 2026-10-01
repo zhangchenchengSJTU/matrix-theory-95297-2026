@@ -2,7 +2,7 @@
   const content = document.querySelector('#content');
   const file = new URLSearchParams(location.search).get('file');
   if (!file || !/^[a-zA-Z0-9_-]+\.md$/.test(file)) {
-    content.textContent = '未找到作业。';
+    content.textContent = '未找到作业.';
     return;
   }
   try {
@@ -23,6 +23,6 @@
     await MathJax.startup.promise;
     await MathJax.typesetPromise([content]);
   } catch {
-    content.textContent = '加载失败，请刷新页面或返回作业列表。';
+    content.textContent = '加载失败,请刷新页面或返回作业列表.';
   }
 })();
