@@ -1,25 +1,31 @@
 # 矩阵理论作业与答案
 
-课程 95297 · 2026。单页静态网站，只发布作业、截止日期和答案。
+上海交通大学 · 2026 年秋季学期  
+研-MATH6005-M05-矩阵理论  
+教师：陈国度 · 助教：张陈成
 
-## 发布作业与答案
+纯静态 HTML/CSS/JavaScript，无 Ruby、无构建步骤。
+Markdown 使用 Marked 15.0.12 渲染，数学公式使用 MathJax 3.2.2 SVG 渲染（脚本随仓库提供）。
 
-1. 将 PDF 放入 `files/`。
-2. 在 `index.html` 的 `<tbody>` 中添加一行（文件内有示例），首次发布时删除“暂无作业”行。
-3. 答案尚未发布时写“未公布”；发布时改为对应 PDF 链接。
-4. 提交并推送到 `main`，GitHub Pages 自动更新。
+## 发布
 
-未发布的答案不要上传到网站目录，避免通过文件地址提前访问。
+将可信的作业 Markdown 放入 `assignments/`，例如 `hw01.md`。
+在 `index.html` 的列表中添加链接 `assignment.html?file=hw01.md`。
+答案同样使用 Markdown；未公布的答案请留在网站目录之外。
+首次发布时移除“暂无作业”行。提交并推送后 Pages 自动更新。
+支持 `$...$`、`$$...$$`、`\(...\)`、`\[...\]`，以及 aligned、pmatrix 等 LaTeX 数学环境。
+`assignments/preview.md` 仅为排版预览，不是正式作业，未列入主页。
 
-## 本地预览
+## 预览
 
 ```bash
 python3 -m http.server 8952 --bind 127.0.0.1
 ```
 
-访问 http://localhost:8952。
+主页：http://localhost:8952/  
+排版预览：http://localhost:8952/assignment.html?file=preview.md
 
 ## 部署
 
-GitHub Pages 使用 `main` 分支根目录。
+GitHub Pages：`main` 分支根目录。
 https://zhangchenchengsjtu.github.io/matrix-theory-95297-2026/

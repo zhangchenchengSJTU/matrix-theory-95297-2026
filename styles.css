@@ -12,3 +12,14 @@ a { color: #1659a0; text-underline-offset: 3px; }
 a:focus-visible { outline: 2px solid #1659a0; outline-offset: 4px; }
 .empty { color: #888; text-align: center; padding: 32px 8px; }
 @media (max-width: 480px) { main { margin: 36px auto; padding: 0 16px; } th, td { padding: 12px 4px; } }
+.paper { max-width: 800px; }
+.back { font-family: system-ui, sans-serif; font-size: 13px; }
+article { margin-top: 40px; font-family: "Noto Serif CJK SC", "Songti SC", SimSun, Georgia, serif; font-size: 17px; line-height: 1.9; }
+article h1 { text-align: center; font-size: 28px; margin-bottom: 32px; }
+article h2 { font-size: 21px; margin-top: 36px; }
+article h3 { font-size: 18px; }
+article p { margin: 16px 0; }
+article mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
+article pre { overflow-x: auto; padding: 12px; background: #f6f6f6; }
+article blockquote { margin-left: 0; padding-left: 18px; border-left: 2px solid #ddd; color: #555; }
+@media print { .back { display: none; } .paper { margin: 0; max-width: none; } }
