@@ -16,8 +16,8 @@
   }
   try {
     const [response, configResponse] = await Promise.all([
-      fetch(`assignments/${file}`),
-      fetch('assignments/documents.json')
+      fetch(`assignments/${file}`, {cache: 'no-cache'}),
+      fetch('assignments/documents.json', {cache: 'no-cache'})
     ]);
     if (!response.ok) throw new Error('load');
     let markdown = await response.text();
