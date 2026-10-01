@@ -15,13 +15,15 @@
     return;
   }
   try {
-    const response = await fetch(`assignments/${file}`);
+    const [response, configResponse] = await Promise.all([
+      fetch(`assignments/${file}`),
+      fetch('assignments/documents.json')
+    ]);
     if (!response.ok) throw new Error('load');
     let markdown = await response.text();
     document.querySelector('#markdown-source').textContent = markdown;
     sourceToggle.disabled = false;
     const metadata = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
-    const configResponse = await fetch('assignments/documents.json');
     if (!configResponse.ok) throw new Error('configuration');
     const documents = await configResponse.json();
     const fields = {...(documents[file] || {})};
@@ -77,13 +79,19 @@
       }
     }
     document.title = `${content.querySelector('h1')?.textContent || '作业'} · 矩阵理论`;
-    await MathJax.startup.promise;
-    await MathJax.typesetPromise([content]);
     if (documents[file]) {
       pdfDownload.href = `pdf/${file.replace(/\.md$/, '.pdf')}`;
       pdfDownload.download = `${content.querySelector('h1')?.textContent.trim() || file.replace(/\.md$/, '')}.pdf`;
       pdfDownload.hidden = false;
     }
+    const typeset = async () => {
+      try {
+        await MathJax.startup.promise;
+        await MathJax.typesetPromise([content]);
+      } catch (error) { console.error('Formula rendering failed', error); }
+    };
+    if (window.MathJax?.typesetPromise) typeset();
+    else window.addEventListener('mathjax-ready', typeset, {once: true});
   } catch {
     content.textContent = '加载失败,请刷新页面或返回作业列表.';
   }
