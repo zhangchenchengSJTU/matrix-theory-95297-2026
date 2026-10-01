@@ -32,7 +32,9 @@ https://zhangchenchengsjtu.github.io/matrix-theory-95297-2026/
 
 ## 红头排版
 
-视觉样板: https://www.bjxch.gov.cn/file/20220601/1654063400276033723.pdf
+模板依据: 中华人民共和国国家标准 GB/T 9704-2012《党政机关公文格式》.
+标准全文: https://dzb.cumtb.edu.cn/info/1040/1184.htm
+此前提供的北京市司法局扫描文件仅为视觉参考.
 
 原件是扫描 PDF, 不包含可提取的字体或文字坐标. 版式测量记录在 `docs/layout-reference.md`.
 `assignments/documents.json` 统一配置网页和 PDF 的红头及编号; Markdown 标题为正文标题. 正文与小问左对齐, 首行缩进两字, 回行顶格. 正文16pt仿宋, 标题22pt宋体类字形, 数学公式使用 MathJax.
