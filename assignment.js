@@ -1,5 +1,15 @@
 (async () => {
   const content = document.querySelector('#content');
+  const sourceToggle = document.querySelector('#source-toggle');
+  const sourcePanel = document.querySelector('#source-panel');
+  const printButton = document.querySelector('#print-button');
+  sourceToggle.addEventListener('click', () => {
+    const expanded = sourceToggle.getAttribute('aria-expanded') !== 'true';
+    sourceToggle.setAttribute('aria-expanded', String(expanded));
+    sourceToggle.textContent = expanded ? '隐藏 Markdown 源代码' : '显示 Markdown 源代码';
+    sourcePanel.hidden = !expanded;
+  });
+  printButton.addEventListener('click', () => window.print());
   const file = new URLSearchParams(location.search).get('file');
   if (!file || !/^[a-zA-Z0-9_-]+\.md$/.test(file)) {
     content.textContent = '未找到作业.';
@@ -9,6 +19,8 @@
     const response = await fetch(`assignments/${file}`);
     if (!response.ok) throw new Error('load');
     let markdown = await response.text();
+    document.querySelector('#markdown-source').textContent = markdown;
+    sourceToggle.disabled = false;
     const metadata = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
     const fields = file === 'hw01.md' ? {
       redhead: '矩阵理论课程作业',
@@ -72,6 +84,7 @@
     document.title = `${content.querySelector('h1')?.textContent || '作业'} · 矩阵理论`;
     await MathJax.startup.promise;
     await MathJax.typesetPromise([content]);
+    printButton.disabled = false;
   } catch {
     content.textContent = '加载失败,请刷新页面或返回作业列表.';
   }
