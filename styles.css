@@ -96,3 +96,7 @@ button, input, select, textarea, code, pre, kbd, samp { font-family: inherit; }
   main, .official-document { width: 100%; padding-left: 16px; padding-right: 16px; }
   .official-document > .document-toolbar { left: 16px; right: 16px; }
 }
+
+.course-header { margin-bottom: 24pt; }
+.course-header h1 { margin: 0; line-height: 0; }
+.course-header img { display: block; width: 100%; height: auto; }

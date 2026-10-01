@@ -1,0 +1,3 @@
+上海交通大学校徽矢量来源: https://github.com/sjtug/SJTUBeamer/blob/main/vi/sjtu-vi-sjtubadge.pdf
+以 pdftocairo 转换为 SVG, 校徽路径保持不变.
+蓝色参考: https://vi.lec.sjtu.edu.cn/color.html (RGB 3, 110, 184).
