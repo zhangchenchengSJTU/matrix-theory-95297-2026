@@ -82,15 +82,12 @@ button, input, select, textarea, code, pre, kbd, samp { font-family: inherit; }
 .pdf-download { padding: 3px 8px; border: 1px solid #aaa; text-decoration: none; }
 .pdf-download[hidden] { display: none; }
 
-.template-credit { max-width: 800px; margin: 24px auto; padding: 0 24px; font-size: 12pt; line-height: 1.6; color: #666; text-align: center; }
-@media print { .template-credit { display: none; } }
 
 .official-document article p > strong:first-child { margin-right: .25em; }
 
 @media screen {
   main, .official-document { width: 50%; max-width: none; padding-left: 32px; padding-right: 32px; }
   .official-document > .document-toolbar { left: 32px; right: 32px; }
-  .template-credit { width: 50%; max-width: none; }
 }
 @media screen and (max-width: 820px) {
   main, .official-document { width: 100%; padding-left: 16px; padding-right: 16px; }
