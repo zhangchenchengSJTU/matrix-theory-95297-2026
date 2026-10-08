@@ -48,6 +48,12 @@
 \hrule height0.35mm
 \vspace{2pt}
 \fontsize{14pt}{28pt}\selectfont
+\if\relax\detokenize{@@REVISION@@}\relax\else
+{\leftskip=1em\rightskip=1em @@REVISION@@\par}
+\vspace{2pt}
+\hrule height0.25mm
+\vspace{2pt}
+\fi
 \hspace{1em}@@PRINTER@@\hfill @@PRINTDATE@@发布\hspace{1em}\par
 \vspace{2pt}
 \hrule height0.35mm

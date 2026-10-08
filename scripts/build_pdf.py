@@ -30,7 +30,7 @@ def build(source):
         text = text[:heading.start()] + text[heading.end():]
     body = subprocess.run(['pandoc', '--from=markdown+tex_math_dollars-raw_html', '--to=latex', '--wrap=none'], input=text, text=True, check=True, capture_output=True).stdout
     body = re.sub(r'(\\textbf\{问题[一二三四五六七八九十]+\})[ \t]*', lambda match: match[1] + r'\hspace{0.25em}', body)
-    values = {'TITLE': title, 'REDHEAD': config.get('redhead', '矩阵理论课程作业'), 'NUMBER': config.get('document-number', ''), 'ISSUER': config.get('issuer', ''), 'DATE': config.get('publication-date', ''), 'PRINTER': config.get('printer', ''), 'PRINTDATE': config.get('print-date', '')}
+    values = {'TITLE': title, 'REDHEAD': config.get('redhead', '矩阵理论课程作业'), 'NUMBER': config.get('document-number', ''), 'ISSUER': config.get('issuer', ''), 'DATE': config.get('publication-date', ''), 'PRINTER': config.get('printer', ''), 'PRINTDATE': config.get('print-date', ''), 'REVISION': config.get('revision', '')}
     template = (ROOT / 'templates/homework.tex').read_text()
     for key, value in values.items():
         template = template.replace(f'@@{key}@@', tex_escape(value))

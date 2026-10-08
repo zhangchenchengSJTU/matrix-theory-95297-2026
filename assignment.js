@@ -74,6 +74,12 @@
         issuer.textContent = fields.printer || fields.issuer;
         const date = document.createElement('span');
         date.textContent = `${fields['print-date']}发布`;
+        if (fields.revision) {
+          const revision = document.createElement('p');
+          revision.className = 'document-revision';
+          revision.textContent = fields.revision;
+          imprint.append(revision);
+        }
         imprint.append(issuer, date);
         content.after(imprint);
       }
