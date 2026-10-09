@@ -23,13 +23,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends pandoc latexmk texlive-xetex texlive-lang-chinese texlive-latex-extra texlive-fonts-recommended fonts-texgyre
+      - name: Install textbook PDF tools
+        run: python3 -m pip install --disable-pip-version-check PyMuPDF==1.28.2
       - name: Compile Markdown directly to PDF
         run: python3 scripts/build_pdf.py
+      - name: Build textbook section downloads
+        run: python3 scripts/build_textbook_downloads.py
       - name: Prepare static site
         run: |
           mkdir _site
           cp *.html *.css *.js .nojekyll _site/
           cp -r assignments vendor files _site/
+          cp -r textbook downloads _site/
           mkdir _site/pdf
           cp pdf/*.pdf _site/pdf/
       - uses: actions/upload-pages-artifact@v4

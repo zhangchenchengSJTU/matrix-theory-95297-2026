@@ -1,0 +1,92 @@
+:root { --blue:#036eb8; --sidebar:290px; --font-size:19px; color-scheme:light; }
+* { box-sizing:border-box; }
+body { margin:0; height:100dvh; overflow:hidden; display:grid; grid-template-columns:var(--sidebar) minmax(0,1fr); color:#233644; background:#fff; font:15px/1.6 system-ui,sans-serif; }
+button,input,select { font:inherit; }
+button,select,summary { cursor:pointer; }
+button,select,input { border:1px solid #cbd7e0; border-radius:4px; background:#fff; color:inherit; padding:6px 10px; }
+a { color:var(--blue); }
+:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+[hidden] { display:none!important; }
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.skip-link { position:fixed; left:12px; top:-100px; padding:8px; background:#fff; z-index:10; }
+.skip-link:focus { top:8px; }
+#sidebar { overflow-y:auto; min-width:0; padding:26px 18px; background:#f8fafc; border-right:1px solid #dce5ec; }
+#sidebar h1 { font-size:19px; font-weight:650; margin:0 0 24px; }
+#chapter-search { width:100%; margin-bottom:18px; padding:8px 10px; }
+nav ul { list-style:none; padding:0; margin:0; }
+nav ul ul { padding-left:14px; border-left:1px solid #e0e8ee; margin-left:6px; }
+#contents>ul>li { margin-bottom:8px; }
+#contents a { display:block; text-decoration:none; padding:6px 8px; border-radius:4px; color:#4a5c6b; line-height:1.45; overflow-wrap:anywhere; }
+#contents>ul>li>details>summary>a,#contents>ul>li>a { font-weight:600; color:#233644; }
+#contents a:hover { background:#eef3f7; }
+#contents a[aria-current="location"] { color:var(--blue); background:#e4f0f9; }
+#contents summary { display:flex; align-items:baseline; list-style:none; }
+#contents summary::-webkit-details-marker { display:none; }
+#contents summary::before { content:"›"; display:inline-block; flex:0 0 12px; color:#698394; }
+#contents details[open]>summary::before { transform:rotate(90deg); }
+#contents summary>a { flex:1; min-width:0; }
+main { display:flex; flex-direction:column; min-height:0; min-width:0; }
+.toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:12px; min-height:64px; padding:10px 24px; border-bottom:1px solid #dce5ec; }
+.home-link { display:inline-block; padding:6px 10px; border:1px solid #cbd7e0; border-radius:4px; background:#fff; color:inherit; text-decoration:none; white-space:nowrap; }
+.home-link:hover { background:#f2f6f9; }
+#current-chapter { flex:1 1 12em; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:550; }
+.draft-status { font-size:12px; color:#738693; white-space:nowrap; }
+#viewport { overflow:auto; min-height:0; flex:1; }
+#reader { width:100%; max-width:1250px; margin:0 auto; padding:32px 48px; font:var(--font-size)/1.9 "SimSun","宋体","Noto Serif CJK SC",serif; color:#1c2932; overflow-wrap:break-word; }
+#reader h1,#reader h2,#reader h3 { line-height:1.5; scroll-margin-top:24px; margin:1.5em 0 .7em; font-weight:700; }
+#reader h1 { font-size:1.7em; }
+#reader h2 { font-size:1.35em; }
+#reader h3 { font-size:1.12em; }
+#reader .source-page:first-child h1:first-child { margin-top:0; }
+#reader p { margin:.8em 0; text-align:left; }
+#reader figure { margin:1.5em 0; text-align:center; }
+#reader figure img { max-width:100%; height:auto; }
+.source-page { position:relative; scroll-margin-top:24px; }
+.source-page+.source-page { margin-top:1.3em; }
+.source-page:is([data-typeset="pending"],[data-typeset="queued"]) { min-height:300px; }
+.source-page:is([data-typeset="pending"],[data-typeset="queued"])>* { visibility:hidden; }
+.source-page:is([data-typeset="pending"],[data-typeset="queued"])::before { content:"正在排版公式..."; position:absolute; left:0; top:0; color:#708391; font:15px system-ui,sans-serif; }
+.source-page [id] { scroll-margin-top:24px; }
+.display-math { overflow-x:auto; margin:1em 0; }
+.display-math > mjx-container > mjx-assistive-mml { height:1px!important; }
+mjx-container[display="true"] { margin:1em 0!important; }
+#load-state { color:#708391; font:16px/1.7 system-ui,sans-serif; }
+.continuation-state { color:#708391; font:15px/1.7 system-ui,sans-serif; margin-top:32px!important; }
+.section-navigation { display:flex; flex:none; gap:8px; }
+.section-navigation button { white-space:nowrap; }
+.section-navigation button:disabled { color:#96a4ae; cursor:default; }
+body.sidebar-closed { grid-template-columns:0 minmax(0,1fr); }
+body.sidebar-closed #sidebar { visibility:hidden; padding:0; }
+#backdrop { position:fixed; inset:0; border:0; background:#16374b66; z-index:3; }
+dialog { width:min(1120px,96vw); max-height:90dvh; padding:24px; border:1px solid #ccd8e2; border-radius:8px; color:#233644; }
+dialog::backdrop { background:#14384c66; }
+.dialog-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.dialog-heading h2 { margin:0; font-size:22px; }
+#download-search { width:min(420px,100%); margin-top:20px; padding:8px 10px; }
+.download-note { color:#6c7f8e; font-size:13px; }
+.table-scroll { overflow:auto; max-height:58dvh; border:1px solid #dce5ec; }
+table { border-collapse:separate; border-spacing:0; width:100%; min-width:760px; text-align:left; font-size:14px; }
+th,td { border-bottom:1px solid #e1e8ee; padding:12px 16px; }
+thead th { position:sticky; top:0; z-index:2; background:#f2f6f9; font-weight:650; }
+thead th:first-child { min-width:330px; }
+tbody th { width:42%; font-weight:450; }
+tbody tr[data-level="0"] th,tbody tr[data-level="1"] th { font-weight:650; }
+tbody tr[data-level="0"] { background:#f8fbfd; }
+tbody tr[data-level="2"] th { padding-left:30px; }
+tbody tr[data-level="3"] th { padding-left:44px; }
+td a { display:inline-block; text-decoration:none; border-bottom:1px solid #b2d6ed; }
+.unavailable { color:#81929e; }
+#download-state { color:#6c7f8e; font-size:13px; margin-bottom:0; }
+@media (max-width:760px) {
+ body { display:block; }
+ main { height:100dvh; }
+ #sidebar { display:none; position:fixed; inset:0 auto 0 0; height:100dvh; width:min(320px,85vw); z-index:4; }
+ body.sidebar-open #sidebar { display:block; }
+ .toolbar { padding:8px; gap:8px; flex-wrap:wrap; }
+ #current-chapter { flex-basis:calc(100% - 164px); }
+ #font-size { flex:1; }
+ #reader { padding:24px 20px; font-size:calc(var(--font-size) - 1px); }
+ #reader h1 { font-size:1.45em; }
+ dialog { padding:16px; }
+ thead th:first-child { min-width:280px; }
+}
