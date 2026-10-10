@@ -13,6 +13,15 @@ a { color:var(--blue); }
 #sidebar { overflow-y:auto; min-width:0; padding:26px 18px; background:#f8fafc; border-right:1px solid #dce5ec; }
 #sidebar h1 { font-size:19px; font-weight:650; margin:0 0 24px; }
 #chapter-search { width:100%; margin-bottom:18px; padding:8px 10px; }
+#search-status { margin:-10px 0 10px; color:#6c7f8e; font-size:13px; }
+#search-results { margin:0 0 14px; }
+#search-results ul { list-style:none; padding:0; margin:0; }
+#search-results li { margin:0 0 6px; }
+#search-results a { display:block; padding:7px 8px; border-left:2px solid #b9d8ec; text-decoration:none; color:#4a5c6b; line-height:1.45; }
+#search-results a:hover { background:#eef3f7; }
+.search-result-title { display:block; color:#233644; font-weight:600; }
+.search-result-excerpt { display:block; color:#6c7f8e; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+mark { color:inherit; background:#fff0b8; padding:0 1px; }
 nav ul { list-style:none; padding:0; margin:0; }
 nav ul ul { padding-left:14px; border-left:1px solid #e0e8ee; margin-left:6px; }
 #contents>ul>li { margin-bottom:8px; }

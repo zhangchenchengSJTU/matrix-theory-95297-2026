@@ -46,11 +46,17 @@ def sync(source):
         path.parent.mkdir(parents=True, exist_ok=True)
         selected = {number: text for number, text in pages.items() if bundle['first'] <= number <= bundle['last'] + 1}
         path.write_text(json.dumps(selected, ensure_ascii=False, separators=(',', ':')) + '\n')
+    search_index = json.loads((reader / 'content/search-index.json').read_text())
+    if isinstance(search_index, dict) and 'revision' in search_index:
+        search_index['revision'] = manifest['revision']
+    (content / 'search-index.json').write_text(json.dumps(search_index, ensure_ascii=False, separators=(',', ':')) + '\n')
     (content / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
 
     downloads = ROOT / 'downloads'
     downloads.mkdir(exist_ok=True)
     shutil.copy2(source / 'downloads/manifest.json', downloads / 'manifest.json')
+    # This standalone document accompanies both corrected derived PDF versions.
+    shutil.copy2(source / 'downloads/errata.pdf', downloads / 'errata.pdf')
     for version in ('original', 'glyph', 'tex'):
         folder = downloads / version
         folder.mkdir(exist_ok=True)

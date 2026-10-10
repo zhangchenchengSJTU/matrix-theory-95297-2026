@@ -6,6 +6,7 @@ let headings = [], availablePages = [], currentIndex = 0, loadRevision = 0, navi
 let contentRevision = '', contentBundles = [];
 const bundleCache = new Map();
 const pageCache = new Map();
+let headingParents = [], searchIndex, searchIndexRequest, searchTimer = 0, searchRevision = 0;
 let typesetQueue = Promise.resolve(), observer;
 const mathJaxReady = new Promise((resolve, reject) => {
   const ready = () => MathJax.startup.promise.then(resolve, reject);
@@ -63,7 +64,7 @@ function buildNavigation() {
   headings.forEach((heading,index) => {
     while (lists.length > heading.level) lists.pop();
     const item = document.createElement('li');
-    item.dataset.title = heading.title;
+    item.dataset.title = heading.title; item.dataset.index = index;
     const link = document.createElement('a');
     link.href = '#'+heading.id; link.textContent = heading.title; link.dataset.index = index;
     if (headings[index+1]?.level > heading.level) {
@@ -74,21 +75,112 @@ function buildNavigation() {
   });
   $('#contents').replaceChildren(root);
 }
-$('#chapter-search').addEventListener('input', () => {
-  if (!headings.length) return;
-  const query = $('#chapter-search').value.trim().toLowerCase().replace(/\s/g,'');
-  function filter(list, inherited = false) {
-    let found = false;
-    for (const item of list.children) {
-      const match = inherited || !query || item.dataset.title.toLowerCase().replace(/\s/g,'').includes(query);
-      const details = item.querySelector(':scope>details'), child = details?.querySelector(':scope>ul');
-      const childMatch = child ? filter(child,match) : false;
-      item.hidden = !(match || childMatch); found ||= !item.hidden;
-      if (details && query) details.open = true;
-    }
-    return found;
+function searchTerms(value) {
+  return value.trim().toLocaleLowerCase('zh-CN').split(/\s+/).map(term => term.replace(/\s/g,'')).filter(Boolean);
+}
+function searchText(value) { return (value || '').toLocaleLowerCase('zh-CN').replace(/\s/g,''); }
+function matchesTerms(value, terms) { return terms.every(term => value.includes(term)); }
+function buildHeadingParents() {
+  const stack = [];
+  headingParents = headings.map((heading, index) => {
+    while (stack.length && headings[stack.at(-1)].level >= heading.level) stack.pop();
+    const parent = stack.at(-1);
+    stack.push(index); return parent;
+  });
+}
+function showSearchStatus(text) {
+  const status = $('#search-status'); status.textContent = text; status.hidden = !text;
+}
+function appendHighlighted(node, text, terms) {
+  const escaped = terms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (!escaped.length) { node.textContent = text; return; }
+  const matcher = new RegExp(`(${escaped.join('|')})`, 'ig');
+  let offset = 0;
+  for (const match of text.matchAll(matcher)) {
+    node.append(document.createTextNode(text.slice(offset, match.index)));
+    const mark = document.createElement('mark'); mark.textContent = match[0]; node.append(mark);
+    offset = match.index + match[0].length;
   }
-  $('#no-results').hidden = filter($('#contents>ul'));
+  node.append(document.createTextNode(text.slice(offset)));
+}
+function resultExcerpt(entry, terms) {
+  const point = Math.max(0, ...terms.map(term => entry.t.indexOf(term)));
+  const start = Math.max(0, point - 30), end = Math.min(entry.t.length, point + 92);
+  return `${start ? '…' : ''}${entry.t.slice(start, end)}${end < entry.t.length ? '…' : ''}`;
+}
+function updateContentsFilter(matches, active) {
+  const visible = new Set();
+  for (const index of matches) for (let current = index; current !== undefined; current = headingParents[current]) visible.add(current);
+  for (const item of $('#contents').querySelectorAll('li[data-index]')) {
+    const index = Number(item.dataset.index); item.hidden = active && !visible.has(index);
+    const details = item.querySelector(':scope>details'); if (active && details && visible.has(index)) details.open = true;
+  }
+}
+function renderSearchResults(results, terms) {
+  const container = $('#search-results');
+  if (!results.length) { container.hidden = true; container.replaceChildren(); return; }
+  const list = document.createElement('ul');
+  for (const result of results.slice(0,30)) {
+    const item = document.createElement('li'), link = document.createElement('a');
+    link.href = '#'+result.target;
+    const title = document.createElement('span'); title.className = 'search-result-title'; appendHighlighted(title, headings[result.heading].title, terms);
+    link.append(title);
+    if (result.entry) {
+      const excerpt = document.createElement('span'); excerpt.className = 'search-result-excerpt'; appendHighlighted(excerpt, resultExcerpt(result.entry, terms), terms); link.append(excerpt);
+    }
+    item.append(link); list.append(item);
+  }
+  container.replaceChildren(list); container.hidden = false;
+}
+async function loadSearchIndex() {
+  if (searchIndex) return searchIndex;
+  if (!searchIndexRequest) {
+    searchIndexRequest = getJSON(`content/search-index.json?v=${contentRevision}`, 'default').then(data => {
+      if (data.revision !== contentRevision) throw new Error('检索索引版本不匹配');
+      searchIndex = data; return data;
+    }).catch(error => { searchIndexRequest = undefined; throw error; });
+  }
+  return searchIndexRequest;
+}
+async function runSearch(revision, value) {
+  const terms = searchTerms(value);
+  if (!terms.length) {
+    updateContentsFilter([], false); renderSearchResults([], terms); $('#no-results').hidden = true; showSearchStatus(''); return;
+  }
+  const headingsById = new Map(headings.map((heading, index) => [heading.id, index]));
+  const results = new Map();
+  headings.forEach((heading, index) => {
+    if (matchesTerms(searchText(heading.title), terms)) results.set(index, {heading:index,target:heading.id});
+  });
+  updateContentsFilter([...results.keys()], true);
+  renderSearchResults([...results.values()], terms);
+  showSearchStatus('正在检索正文...');
+  try {
+    const index = await loadSearchIndex();
+    if (revision !== searchRevision) return;
+    for (const entry of index.entries) {
+      if (!matchesTerms(entry.t, terms)) continue;
+      const heading = headingsById.get(entry.h);
+      if (heading !== undefined && !results.has(heading)) results.set(heading, {heading,target:entry.id,entry});
+    }
+    const found = [...results.values()];
+    updateContentsFilter(found.map(result => result.heading), true);
+    renderSearchResults(found, terms);
+    $('#no-results').hidden = found.length > 0;
+    showSearchStatus(found.length ? `找到 ${found.length} 个最细目录项${found.length > 30 ? ', 仅显示前 30 项.' : '.'}` : '');
+  } catch (error) {
+    if (revision !== searchRevision) return;
+    const found = [...results.values()];
+    $('#no-results').hidden = found.length > 0;
+    showSearchStatus(found.length ? '正文关键词检索暂时不可用, 已显示目录匹配.' : '正文关键词检索暂时不可用.');
+    console.error(error);
+  }
+}
+$('#chapter-search').addEventListener('input', () => {
+  clearTimeout(searchTimer); const revision = ++searchRevision, value = $('#chapter-search').value;
+  if (!value.trim()) { runSearch(revision, value); return; }
+  if (!headings.length) { showSearchStatus('正在加载目录...'); return; }
+  searchTimer = setTimeout(() => runSearch(revision, value), 180);
 });
 function setActive(index) {
   $('#contents a[aria-current]')?.removeAttribute('aria-current');
@@ -223,6 +315,21 @@ $('#next').addEventListener('click', () => navigate(headings[currentIndex+1].id)
 const dialog = $('#download-dialog');
 let downloadRows = [];
 let texStatus = 'pending';
+let downloadHashes = {};
+function pdfURL(file, hash) {
+  const url = new URL(file, location.href);
+  if (hash) url.searchParams.set('v', hash.slice(0,12));
+  return url.href;
+}
+function renderErrata(errata) {
+  const entry = $('#download-errata');
+  const link = $('#errata-download');
+  if (!errata?.file) { entry.hidden = true; return; }
+  link.href = pdfURL(errata.file, errata.sha256);
+  link.download = errata.download || 'errata.pdf';
+  link.textContent = errata.title || '勘误表 PDF';
+  entry.hidden = false;
+}
 function renderDownloads() {
   const fragment = document.createDocumentFragment();
   for (const row of downloadRows) {
@@ -231,7 +338,7 @@ function renderDownloads() {
     for (const version of ['original','glyph','tex']) {
       const td = document.createElement('td');
       if (row.files[version]) {
-        const a = document.createElement('a'); a.href = row.files[version]; a.textContent = version === 'tex' && texStatus === 'draft' ? '下载草稿' : '下载';
+        const a = document.createElement('a'); a.href = pdfURL(row.files[version],version === 'original' ? null : downloadHashes[version]); a.textContent = version === 'tex' && texStatus === 'draft' ? '下载草稿' : '下载';
         a.download = `${row.title}-${version}.pdf`; a.setAttribute('aria-label',`${row.title}, ${version}版本, 下载 PDF`); td.append(a);
       } else { const span = document.createElement('span'); span.className = 'unavailable'; span.textContent = '转换中'; td.append(span); }
       tr.append(td);
@@ -244,7 +351,8 @@ $('#downloads').addEventListener('click', async () => {
   dialog.showModal(); $('#download-state').textContent = '正在加载版本列表...';
   try {
     const data = await getJSON('../downloads/manifest.json'); downloadRows = data.rows; texStatus = data.tex_status || 'pending';
-    renderDownloads(); $('#download-state').textContent = texStatus === 'draft' ? 'AI TeX 识别版本为转换草稿, 保留原书内容与已记录的疑点.' : 'AI TeX 识别版本在编译完成后提供下载.';
+    downloadHashes = Object.fromEntries(data.versions.map(version => [version.id,version.sha256]));
+    renderDownloads(); renderErrata(data.errata); $('#download-state').textContent = texStatus === 'draft' ? 'AI TeX 识别版本为转换草稿, 已按勘误修订.' : 'AI TeX 识别版本在编译完成后提供下载.';
     $('#download-search').value = '';
   } catch { $('#download-state').textContent = '版本列表加载失败, 请关闭后重试.'; }
 });
@@ -261,7 +369,9 @@ $('#download-search').addEventListener('input', () => {
     const data = await getJSON('content/manifest.json');
     headings = data.headings; availablePages = data.pages;
     contentRevision = data.revision; contentBundles = data.bundles;
+    buildHeadingParents();
     buildNavigation();
+    if ($('#chapter-search').value.trim()) runSearch(++searchRevision, $('#chapter-search').value);
     await navigate(location.hash.slice(1) || headings[0].id,false);
   } catch (error) { $('#load-state').textContent = '教材加载失败, 请刷新页面重试.'; console.error(error); }
 })();

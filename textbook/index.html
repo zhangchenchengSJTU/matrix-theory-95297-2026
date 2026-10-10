@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>矩阵理论及其应用</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="reader.css?v=d36453e7ff">
+  <link rel="stylesheet" href="reader.css?v=7915cef65c">
   <script src="mathjax-config.js"></script>
-  <script src="reader.js?v=36d57c38d7" defer></script>
+  <script src="reader.js?v=79a591a62c" defer></script>
   <script id="mathjax-script" src="../vendor/tex-svg.js" defer></script>
 </head>
 <body>
@@ -15,9 +15,11 @@
   <aside id="sidebar" aria-label="教材目录">
     <h1>矩阵理论及其应用</h1>
     <label class="sr-only" for="chapter-search">查找章节</label>
-    <input id="chapter-search" type="search" placeholder="查找章节" autocomplete="off">
+    <input id="chapter-search" type="search" placeholder="查找章节或关键词" autocomplete="off">
+    <p id="search-status" role="status" aria-live="polite" hidden></p>
+    <nav id="search-results" aria-label="检索结果" hidden></nav>
     <nav id="contents" aria-label="章节目录"></nav>
-    <p id="no-results" hidden>没有匹配的章节.</p>
+    <p id="no-results" hidden>没有匹配的章节或正文.</p>
   </aside>
   <button id="backdrop" aria-label="关闭目录" hidden></button>
   <main>
@@ -26,7 +28,7 @@
       <a class="home-link" href="../">返回主页</a>
       <span id="current-chapter">矩阵理论及其应用</span>
       <nav class="section-navigation" aria-label="相邻章节"><button id="previous" disabled>上一节</button><button id="next" disabled>下一节</button></nav>
-      <span class="draft-status" title="AI TeX 识别版本中的复杂公式仍待对照原始PDF核对">AI TeX 识别版本（草稿）</span>
+      <span class="draft-status" title="AI TeX 识别版本中的复杂公式仍待对照原始PDF核对">AI TeX 识别版本(勘误修订稿, 草稿)</span>
       <label class="sr-only" for="font-size">正文字号</label>
       <select id="font-size" aria-label="正文字号"><option value="19">正常字号</option><option value="22">较大字号</option><option value="25">大字号</option></select>
       <button id="downloads">下载 PDF</button>
@@ -39,6 +41,7 @@
     <div class="dialog-heading"><h2 id="download-title">下载 PDF</h2><button id="close-downloads" aria-label="关闭下载表格">关闭</button></div>
     <label class="sr-only" for="download-search">筛选章节</label><input id="download-search" type="search" placeholder="筛选章节" autocomplete="off">
     <p class="download-note">分节 PDF 包含该节所在的页面, 首尾页可能包含相邻节内容.</p>
+    <p id="download-errata" class="download-note" hidden><a id="errata-download" download>勘误表 PDF</a></p>
     <div class="table-scroll"><table><caption class="sr-only">每行为一个 section 或全部 PDF, 每列为一个版本.</caption><thead><tr><th scope="col">Section / 全部 PDF</th><th scope="col">原始PDF</th><th scope="col">AI 字形提取版本</th><th scope="col">AI TeX 识别版本</th></tr></thead><tbody id="download-rows"></tbody></table></div>
     <p id="download-state" role="status"></p>
   </dialog>
