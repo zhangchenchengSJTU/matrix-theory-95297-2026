@@ -2789,7 +2789,7 @@
   "errata": {
     "title": "勘误表 PDF",
     "file": "../downloads/errata.pdf",
-    "sha256": "6447e3c6d20d3cf8e6343a6213e876cb8e2a6aebf1b38cfe8e3795bb4027e451"
+    "sha256": "ef75ef581b6f39f8a7194715c96aaa35097efdfac67297b3d14a707e6d6a30f4"
   },
   "tex_status": "draft",
   "tex_pdf_pages": 335
