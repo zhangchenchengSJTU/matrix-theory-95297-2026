@@ -3,7 +3,8 @@ __pycache__/
 
 .preview/
 
-pdf/
+/pdf/*
+!/pdf/*.pdf
 _site/
 
 # Full textbook PDFs and the manifest are versioned.  Section excerpts are

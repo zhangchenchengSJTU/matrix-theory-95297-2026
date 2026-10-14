@@ -1,4 +1,4 @@
-name: Build homework PDFs and deploy Pages
+name: Deploy Pages with local homework PDFs
 on:
   push:
     branches: [main]
@@ -19,14 +19,25 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
-      - name: Install Markdown and LaTeX toolchain
+      - name: Verify local homework PDFs
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends pandoc latexmk texlive-xetex texlive-lang-chinese texlive-latex-extra texlive-fonts-recommended fonts-texgyre
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          documents = json.loads(Path('assignments/documents.json').read_text())
+          sizes = json.loads(Path('assignments/font-sizes.json').read_text())
+          themes = json.loads(Path('assignments/themes.json').read_text())
+          for name in documents:
+              for size in sizes:
+                  for theme in themes:
+                      suffix = ('' if size == 'default' else f'-{size}') + ('' if theme == 'blue' else f'-{theme}')
+                      pdf = Path('pdf') / f'{Path(name).stem}{suffix}.pdf'
+                      if not pdf.is_file() or not pdf.read_bytes().startswith(b'%PDF-'):
+                          raise SystemExit(f'Missing or invalid PDF: {pdf}. Run scripts/build_pdf.py locally before publishing.')
+          print('All local homework PDFs verified.')
+          PY
       - name: Install textbook PDF tools
         run: python3 -m pip install --disable-pip-version-check PyMuPDF==1.28.2
-      - name: Compile Markdown directly to PDF
-        run: python3 scripts/build_pdf.py
       - name: Build textbook section downloads
         run: python3 scripts/build_textbook_downloads.py
       - name: Prepare static site
