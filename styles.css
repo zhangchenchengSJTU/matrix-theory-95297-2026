@@ -20,6 +20,7 @@ article ol > li { counter-increment: question-part; padding: 0; text-indent: 2em
 article ol > li::before { content: counter(question-part) ". "; }
 article ul { margin: 0 0 14pt; padding-left: 2em; }
 article li > p { text-indent: 0; }
+article ol > li > p:first-child { display: inline; }
 article mjx-container { text-indent: 0; letter-spacing: normal; word-spacing: normal; }
 article mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 8px 0; text-indent: 0; }
 article pre { overflow-x: auto; padding: 12px; background: #f6f6f6; }

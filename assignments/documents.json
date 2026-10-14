@@ -8,6 +8,14 @@
     "print-date": "2026年10月1日",
     "revision": "更正说明: 2026年10月8日, 将问题四中的\"投影矩阵\"更正为\"正交投影矩阵\", 以消除原表述中的歧义."
   },
+  "hw02.md": {
+    "redhead": "矩阵理论课程作业",
+    "document-number": "研-MATH6005-M05-矩阵理论 〔2026〕 第 2 次作业",
+    "issuer": "研-MATH6005-M05-矩阵理论",
+    "printer": "助教: 张陈成",
+    "publication-date": "2026年10月14日",
+    "print-date": "2026年10月14日"
+  },
   "hw01-answer.md": {
     "redhead": "矩阵理论课程作业",
     "document-number": "研-MATH6005-M05-矩阵理论 〔2026〕 第 1 次作业参考答案",
