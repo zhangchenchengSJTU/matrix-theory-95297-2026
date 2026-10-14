@@ -1,0 +1,5 @@
+{
+  "red": {"label": "公文红", "color": "#b5121b"},
+  "blue": {"label": "交大蓝", "color": "#036eb8"},
+  "black": {"label": "纯黑", "color": "#000000"}
+}

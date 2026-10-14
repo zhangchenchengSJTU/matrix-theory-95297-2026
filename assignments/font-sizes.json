@@ -1,0 +1,6 @@
+{
+  "tiny": {"label": "极小", "scale": 0.75},
+  "small": {"label": "小", "scale": 0.875},
+  "default": {"label": "默认", "scale": 1},
+  "large": {"label": "大", "scale": 1.125}
+}
