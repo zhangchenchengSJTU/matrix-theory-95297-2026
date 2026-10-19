@@ -3,25 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>矩阵理论 · 作业与答案</title>
-  <link rel="stylesheet" href="styles.css?v=20261001-9">
+  <title>矩阵理论 · 课程主页</title>
+  <link rel="stylesheet" href="styles.css?v=20261019-3">
+  <script src="homepage.js?v=20261019-2" defer></script>
 </head>
 <body>
   <main>
     <header class="course-header"><h1><img src="files/course-header.svg" alt="矩阵理论" width="1200" height="240"></h1></header>
     <p class="subtitle">上海交通大学 · 2026 年秋季学期<br>研-MATH6005-M05-矩阵理论<br>教师:陈国度　助教:张陈成<br><a href="https://oc.sjtu.edu.cn/courses/95297/">Canvas</a> · <a href="https://github.com/zhangchenchengSJTU/matrix-theory-95297-2026">GitHub 仓库</a> · <a href="textbook/" title="矩阵理论及其应用, 可阅读或下载 PDF">教材</a></p>
-    <table>
-      <caption><strong>作业与答案</strong></caption>
-      <thead><tr><th scope="col">作业</th><th scope="col">截至</th><th scope="col">答案</th></tr></thead>
-      <tbody>
-        <!-- 发布时添加一行,例如:
-        <tr><td><a href="files/homework-01.pdf">第 1 次作业</a></td><td>2026-10-15</td><td>未公布</td></tr>
-        答案公布后,将"未公布"替换为 <a href="files/answers-01.pdf">答案</a>.
-        -->
-        <tr><td><a href="assignment.html?file=hw01.md">第一次作业</a></td><td>2026-10-14 03:59</td><td><a href="assignment.html?file=hw01-answer.md">参考答案</a></td></tr>
-        <tr><td><a href="assignment.html?file=hw02.md">第二次作业</a></td><td>2026-10-21 03:59</td><td>未公布</td></tr>
-      </tbody>
-    </table>
+    <div class="course-tabs" role="tablist" aria-label="课程内容">
+      <button type="button" id="assignments-tab" role="tab" aria-selected="true" aria-controls="assignments-panel">作业</button>
+      <button type="button" id="tutorials-tab" role="tab" aria-selected="false" aria-controls="tutorials-panel" tabindex="-1">习题课</button>
+    </div>
+    <div class="course-panels">
+      <section class="course-panel" id="assignments-panel" role="tabpanel" aria-labelledby="assignments-tab" aria-hidden="false" tabindex="0">
+        <table>
+          <caption><strong>作业与答案</strong></caption>
+          <thead><tr><th scope="col">作业</th><th scope="col">截至</th><th scope="col">答案</th></tr></thead>
+          <tbody>
+            <tr><td><a href="assignment.html?file=hw01.md">第一次作业</a></td><td>2026-10-14 03:59</td><td><a href="assignment.html?file=hw01-answer.md">参考答案</a></td></tr>
+            <tr><td><a href="assignment.html?file=hw02.md">第二次作业</a></td><td>2026-10-21 03:59</td><td>未公布</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="course-panel" id="tutorials-panel" role="tabpanel" aria-labelledby="tutorials-tab" aria-hidden="true" tabindex="-1" inert>
+        <table class="tutorial-schedule">
+          <caption><strong>习题课公示栏</strong><br><span class="schedule-note">时间: 周一 18:55–20:20. 地点: 东上院 303</span></caption>
+          <thead><tr><th scope="col">周次与日期</th><th scope="col">资料</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">第六周<br><time datetime="2026-10-19">2026-10-19</time></th><td><a href="files/tutorial-01-20261019.pdf" aria-label="第一次习题课 PDF">PDF</a> · <a href="https://pan.sjtu.edu.cn/web/share/d96ad93b8ef6f9da3c66cb90b9900e50" title="分享内容: 2026秋-矩阵理论-习题课-1.mp4" aria-label="第一次习题课录屏">录屏</a></td></tr>
+            <tr><th scope="row">第八周<br><time datetime="2026-11-02">2026-11-02</time></th><td>待公布</td></tr>
+            <tr><th scope="row">第十周<br><time datetime="2026-11-16">2026-11-16</time></th><td>待公布</td></tr>
+            <tr><th scope="row">第十二周<br><time datetime="2026-11-30">2026-11-30</time></th><td>待公布</td></tr>
+            <tr><th scope="row">第十四周<br><time datetime="2026-12-14">2026-12-14</time></th><td>待公布</td></tr>
+            <tr><th scope="row">第十六周<br><time datetime="2026-12-28">2026-12-28</time></th><td>待公布</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
   </main>
 </body>
 </html>

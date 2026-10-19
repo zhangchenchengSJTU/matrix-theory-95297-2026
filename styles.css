@@ -110,4 +110,55 @@ button, input, select, textarea, code, pre, kbd, samp { font-family: inherit; }
 .course-header h1 { margin: 0; line-height: 0; }
 .course-header img { display: block; width: 100%; height: auto; }
 
+.course-tabs {
+  display: flex;
+  margin-bottom: 28pt;
+}
+.course-tabs button {
+  flex: 1;
+  padding: 8px 16px;
+  border: 1px solid #036eb8;
+  background: #fff;
+  color: #036eb8;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+.course-tabs button + button {
+  border-left: 0;
+}
+.course-tabs button[aria-selected="true"] {
+  background: #036eb8;
+  color: #fff;
+}
+.course-tabs button:focus-visible {
+  outline: 2px solid #036eb8;
+  outline-offset: 3px;
+}
+.course-panels {
+  display: grid;
+}
+.course-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  align-self: start;
+}
+.course-panel[aria-hidden="true"] {
+  visibility: hidden;
+}
+.tutorial-schedule .schedule-note {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 14pt;
+  line-height: 24pt;
+}
+.tutorial-schedule time {
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .tutorial-schedule, .tutorial-schedule .schedule-note {
+    font-size: 12pt;
+  }
+}
+
 .document-revision { flex-basis: 100%; margin: 0; padding: 0 1em; border-bottom: 0.25mm solid #000; text-align: left; overflow-wrap: anywhere; }
