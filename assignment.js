@@ -19,7 +19,7 @@
   try {
     const [response, configResponse, sizesResponse, themesResponse] = await Promise.all([
       fetch(`assignments/${file}`, {cache: 'no-cache'}),
-      fetch('assignments/documents.json?v=20261014-5', {cache: 'no-cache'}),
+      fetch('assignments/documents.json?v=20261021-final', {cache: 'no-cache'}),
       fetch('assignments/font-sizes.json', {cache: 'no-cache'}),
       fetch('assignments/themes.json', {cache: 'no-cache'})
     ]);
